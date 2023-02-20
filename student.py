@@ -1,9 +1,9 @@
 class Student:
-    def __init__(self, student_id: int, first_name: str, last_name: str):
+    def __init__(self, student_id: int, first_name: str, last_name: str,exam_scores=None):
         self.student_id = student_id
         self.first_name = first_name
         self.last_name = last_name
-        self.exam_scores = []
+        self.exam_scores = exam_scores or []
 
     def add_score(self, score):
         while True:
@@ -19,21 +19,24 @@ class Student:
         print(my_string)
 
     def score_average(self):
-        if self.exam_scores != 0:
+        if len(self.exam_scores) != 0:
             summa = sum(self.exam_scores)
             len_o = len(self.exam_scores)
             average = summa / len_o
-            return f' {average:.2f}'
+            return f'{average:.2f}'
+
         else:
-            print(f' Student {self.first_name} {self.last_name} has not yet passed any exams')
+            return f' Student {self.first_name} {self.last_name} has not yet passed any exams'
 
     def course_passed(self):
-        average = float(self.score_average())
-
-        if average > 60:
-            return True
-        else:
-            return False
+        try:
+            average = float(self.score_average())
+            if average > 60 and len(self.exam_scores) >= 3:
+                return True
+            else:
+                return False
+        except:
+            return f' Student {self.first_name} {self.last_name} has not yet passed any exams'
 
 
 student_1 = Student(1, "John", "Doe")
@@ -61,5 +64,7 @@ student_4 = Student(4, "Jane", "Doe")
 student_4.add_score(95)
 student_4.add_score(80)
 student_4.add_score(100)
+student_4.show_scores()
 print(student_4.score_average())
 print(student_4.course_passed())
+
