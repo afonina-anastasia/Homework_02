@@ -1,32 +1,23 @@
 import csv
 
-def sum_of_digits(number_from_csv):
-    new_list = []
-    while True:
-        if number_from_csv.isdigit() and (1 <= len(number_from_csv) <= 10):
-            number_from_csv = list(number_from_csv)
-            new_list = [int(i) for i in number_from_csv]
-            # print(number_from_csv)
-            #print(new_list)
-            total = sum(new_list)
-            return f'{total}'
+
+def sum_of_digits(number_from_csv: int):
+    if (
+        not isinstance(number_from_csv, int)
+        and (1 > len(str(number_from_csv)) > 10)
+        and number_from_csv > 0
+    ):
+        return "it is not an integer or an incorrect number of digits."
+
+    else:
+        digits = [int(number) for number in str(number_from_csv)]
+        return sum(digits)
 
 
-        elif not number_from_csv.isdigit():
-            return "Enter three integers without spaces!"
-
-        elif len(number_from_csv) > 10:
-            return "vvedi chislo dlinoi do 10!"
-
-
-        else:
-            break
-
-
-# sum_of_digits(str())
-
-with open("test_numbers.csv", 'r') as f:
+with open("test_numbers.csv", "r") as f:
     reader = csv.reader(f)
     for line in reader:
         for number in line:
-            print(f' for numbers {line}, the sum  is equal to : {sum_of_digits(number)}')
+            print(
+                f" for numbers {line}, the sum  is equal to : {sum_of_digits(int(number))}"
+            )
